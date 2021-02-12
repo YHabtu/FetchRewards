@@ -3,22 +3,16 @@
 #find the fake gold bar by only bars and balance scales.
 #You can only place gold bars on scale plates (bowls) and find which scale weighs more or less.
 
-  Feature: As a user I should be able to use the scale to find a fake gold bar
-    Scenario: I should be able to find a fake gold bars
+  Feature: As a user i should be able to identify to fake gold bar
+    Scenario: locating a fake gold bar
       Given user is on the scale page
-      When user scale the gold bars by inserting nums
-      And user clicks on "weights"
-      Then user should be able to find the fake bar
+      When user scales the gold bar inserting numbers
+      And user clicks on "Weigh"
+      Then user should be easily identify the fake gold bar
 
 
 
-      ##
-    #| 0, 1    |  | 2, 3    |
-    #| 3, 4    |  | 6, 5    |
-    #| 6, 7    |  | 0, 8    |
-    #| 1, 2    |  | 0, 3    |
-    #| 3, 5    |  | 4, 6    |
-    #| 3, 4, 5 |  | 0, 1 ,2 |
-    #| 3, 4, 5 |  | 6, 7, 8 |
-    #| 0, 4, 6 |  | 1, 7, 0 |
-    ##
+
+
+
+

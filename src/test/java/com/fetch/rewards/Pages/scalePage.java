@@ -38,5 +38,32 @@ public class scalePage {
     @FindBy(xpath = "//li[1]")
     public WebElement Weightings; // found misspelling Weighings(Weightings)
 
+    @FindBy(id = "coin_0")
+    public WebElement coins0Btn;
+
+    @FindBy(id = "coin_1")
+    public WebElement coins1Btn;
+
+    @FindBy(id = "coin_2")
+    public WebElement coins2Btn;
+
+    @FindBy(id = "coin_3")
+    public WebElement coins3Btn;
+
+    @FindBy(id = "coin_4")
+    public WebElement coins4Btn;
+
+    @FindBy(id = "coin_5")
+    public WebElement coins5Btn;
+
+    @FindBy(id = "coin_6")
+    public WebElement coins6Btn;
+
+    @FindBy(id = "coin_7")
+    public WebElement coins7Btn;
+
+    @FindBy(id = "coin_8")
+    public WebElement coins8Btn;
+
 
 }
