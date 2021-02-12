@@ -166,7 +166,6 @@ public class scale_step_definition {
                     alert.accept();
                     scalePage.coins7Btn.click();
                 }else {
-                    Assert.assertTrue(alert.getText().contains("Yay! You find it!"));
                     BrowserUtils.waits(5);
                     alert.accept();
                 }
@@ -176,6 +175,7 @@ public class scale_step_definition {
     }
     @Then("user should be easily identify the fake gold bar")
     public void user_should_be_easily_identify_the_fake_gold_bar()  {
+        Assert.assertTrue(alert.getText().contains("Yay! You find it!"));
         Driver.closeDriver();
 
     }
