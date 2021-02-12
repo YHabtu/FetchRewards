@@ -42,7 +42,7 @@ public class scale_step_definition {
             scalePage.right_0.clear();
             scalePage.right_1.clear();
             BrowserUtils.waits(10);
-        }if (isLess || isGreater) {
+        }else if (isLess || isGreater) {
             scalePage.coins0Btn.click();
             try {
                 wait.until(ExpectedConditions.alertIsPresent());
@@ -53,17 +53,19 @@ public class scale_step_definition {
 
             String alertText = alert.getText();
             if (alertText.contains("Oops! Try Again!")) {
+                scalePage.coins1Btn.click();
                 BrowserUtils.waits(5);
                 alert.accept();
-                scalePage.coins1Btn.click();
                 if (alertText.contains("Oops! Try Again!")) {
-                    BrowserUtils.waits(5);
-                    alert.accept();
                     scalePage.coins2Btn.click();
-                } else if (alertText.contains("Oops! Try Again!")) {
                     BrowserUtils.waits(5);
                     alert.accept();
+
+                }
+                if (alertText.contains("Oops! Try Again!")) {
                     scalePage.coins3Btn.click();
+                    BrowserUtils.waits(5);
+                    alert.accept();
                 }else {
                     Assert.assertTrue(alert.getText().contains("Yay! You find it!"));
                     BrowserUtils.waits(5);
@@ -73,7 +75,7 @@ public class scale_step_definition {
 
         }
 
-            scalePage.left_2.sendKeys("4");
+            scalePage.left_0.sendKeys("4");
             scalePage.left_1.sendKeys("5");
             scalePage.right_0.sendKeys("6");
             scalePage.right_1.sendKeys("7");
@@ -117,13 +119,24 @@ public class scale_step_definition {
 
         }
 
-            BrowserUtils.waits(2);
-            scalePage.left_0.sendKeys("3");
-            scalePage.left_1.sendKeys("6");
-            scalePage.right_0.sendKeys("5");
-            scalePage.right_1.sendKeys("8");
-            scalePage.weighBtn.click();
-            BrowserUtils.waits(3);
+
+    }
+
+
+    @When("user clicks on {string}")
+    public void user_clicks_on(String string) {
+        scalePage.left_0.sendKeys("4");
+        scalePage.left_1.sendKeys("5");
+        scalePage.right_0.sendKeys("6");
+        scalePage.right_1.sendKeys("7");
+        scalePage.weighBtn.click();
+        weightText = scalePage.Weightings.getText();
+        boolean equals = weightText.contains("=");
+        boolean isLess = weightText.contains("<");
+        boolean isGreater = weightText.contains(">");
+
+        scalePage.weighBtn.click();
+
         if (equals) {
             BrowserUtils.waits(5);
             scalePage.left_0.clear();
@@ -131,7 +144,7 @@ public class scale_step_definition {
             scalePage.right_0.clear();
             scalePage.right_1.clear();
         }else if (isLess || isGreater) {
-            scalePage.coins0Btn.click();
+            scalePage.coins4Btn.click();
             try {
                 wait.until(ExpectedConditions.alertIsPresent());
                 alert = Driver.getDriver().switchTo().alert();
@@ -143,15 +156,15 @@ public class scale_step_definition {
             if (alertText.contains("Oops! Try Again!")) {
                 BrowserUtils.waits(5);
                 alert.accept();
-                scalePage.coins1Btn.click();
+                scalePage.coins5Btn.click();
                 if (alertText.contains("Oops! Try Again!")) {
                     BrowserUtils.waits(5);
                     alert.accept();
-                    scalePage.coins2Btn.click();
+                    scalePage.coins6Btn.click();
                 } else if (alertText.contains("Oops! Try Again!")) {
                     BrowserUtils.waits(5);
                     alert.accept();
-                    scalePage.coins3Btn.click();
+                    scalePage.coins7Btn.click();
                 }else {
                     Assert.assertTrue(alert.getText().contains("Yay! You find it!"));
                     BrowserUtils.waits(5);
@@ -160,15 +173,6 @@ public class scale_step_definition {
             }
 
         }
-
-
-        Driver.closeDriver();
-    }
-
-
-    @When("user clicks on {string}")
-    public void user_clicks_on(String string) {
-        System.out.println(weightText);
     }
     @Then("user should be easily identify the fake gold bar")
     public void user_should_be_easily_identify_the_fake_gold_bar()  {
