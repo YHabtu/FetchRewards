@@ -39,5 +39,4 @@ public class scalePage {
     public WebElement Weightings; // found misspelling Weighings(Weightings)
 
 
-
 }

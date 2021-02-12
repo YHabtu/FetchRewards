@@ -44,6 +44,7 @@ public class scale_step_definition {
             System.out.println(false);
         }
 
+        Driver.closeDriver();
 
 
     }
