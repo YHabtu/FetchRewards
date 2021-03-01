@@ -9,112 +9,115 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class scale_step_definition {
-    scalePage scalePage = new scalePage();
     WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 20);
-    String weightText;
-    Alert alert;
-
+    scalePage scalePage = new scalePage();
+    WebElement fakeBar=null;
 
     @Given("user is on the scale page")
-    public void user_is_on_the_scale_page() {
-        String url = ConfigurationReader.getProperty("url");
-        Driver.getDriver().get(url);
+    public void user_is_on_the_scale_page(){
+        Driver.getDriver().get(ConfigurationReader.getProperty("url"));
+        String expectedtitle = "React App";
+        String currentURL = "http://ec2-54-208-152-154.compute-1.amazonaws.com/";
+
+        Assert.assertTrue("Title verification Failed",Driver.getDriver().getTitle().equals(expectedtitle));
+        Assert.assertTrue("URL verification Failed",Driver.getDriver().getCurrentUrl().equals(currentURL));
+
     }
+
     @When("user scales the gold bar inserting numbers")
-    public void userScalesTheGoldBarInsertingNumbers() {
-        scalePage.left_0.sendKeys("0");
-        scalePage.left_1.sendKeys("1");
-        scalePage.right_0.sendKeys("2");
-        scalePage.right_1.sendKeys("3");
-        BrowserUtils.waits(5);
-        scalePage.weighBtn.click();
-        weightText = scalePage.Weightings.getText();
-        boolean equals = weightText.contains("=");
-        boolean isLess = weightText.contains("<");
-        boolean isGreater = weightText.contains(">");
-        if (equals) {
-            scalePage.left_0.clear();
-            scalePage.left_1.clear();
-            scalePage.right_0.clear();
-            scalePage.right_1.clear();
-            BrowserUtils.waits(10);
-        }else if (isLess || isGreater) {
-            scalePage.coins0Btn.click();
-            try {
-                wait.until(ExpectedConditions.alertIsPresent());
-                alert = Driver.getDriver().switchTo().alert();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+    public void user_scales_the_gold_bar_inserting_numbers() {
+        wait.until(ExpectedConditions.visibilityOf(scalePage.left0));
+        //place 123 on left  456 on right
+        scalePage.left0.sendKeys("1");
+        scalePage.left1.sendKeys("2");
+        scalePage.left2.sendKeys("3");
+        scalePage.right0.sendKeys("4");
+        scalePage.right1.sendKeys("5");
+        scalePage.right2.sendKeys("6");
+
+        BrowserUtils.waits(3);
+        scalePage.weigh.click();
+        //assert the sign in the response box
+        wait.until(ExpectedConditions.visibilityOf(scalePage.responseTableRow1));
+        String line1Response = scalePage.responseTableRow1.getText();
+        BrowserUtils.waits(3);
+
+        if(line1Response.contains("=")){
+            wait.until(ExpectedConditions.visibilityOf(scalePage.reset));
+            BrowserUtils.waits(3);
+
+            scalePage.reset.click();
+
+            scalePage.left0.sendKeys("7");
+            scalePage.right0.sendKeys("8");
+
+            wait.until(ExpectedConditions.elementToBeClickable(scalePage.weigh));
+
+            scalePage.weigh.click();
+            BrowserUtils.waits(3);
+
+            wait.until(ExpectedConditions.visibilityOf(scalePage.responseTableRow2));
+            String line2Response = scalePage.responseTableRow2.getText();
+            BrowserUtils.waits(3);
+            if(line2Response.contains("=")){
+                fakeBar = scalePage.coin_0;
+            }else if(line2Response.contains(">")){
+                fakeBar=scalePage.coin_8;
+            }else{
+                fakeBar=scalePage.coin_7;
             }
 
-            String alertText = alert.getText();
-            if (alertText.contains("Oops! Try Again!")) {
-                scalePage.coins1Btn.click();
-                BrowserUtils.waits(5);
-                alert.accept();
-                if (alertText.contains("Oops! Try Again!")) {
-                    scalePage.coins2Btn.click();
-                    BrowserUtils.waits(5);
-                    alert.accept();
+        }else if(line1Response.contains(">")){
+            wait.until(ExpectedConditions.visibilityOf(scalePage.reset));
+            BrowserUtils.waits(3);
 
-                }
-                if (alertText.contains("Oops! Try Again!")) {
-                    scalePage.coins3Btn.click();
-                    BrowserUtils.waits(5);
-                    alert.accept();
-                }else {
-                    Assert.assertTrue(alert.getText().contains("Yay! You find it!"));
-                    BrowserUtils.waits(5);
-                    alert.accept();
-                }
+            scalePage.reset.click();
+            BrowserUtils.waits(3);
+
+            scalePage.left0.sendKeys("4");
+            scalePage.right0.sendKeys("5");
+            BrowserUtils.waits(3);
+
+            scalePage.weigh.click();
+            BrowserUtils.waits(3);
+
+            wait.until(ExpectedConditions.visibilityOf(scalePage.responseTableRow2));
+            String line2Response = scalePage.responseTableRow2.getText();
+            if(line2Response.contains("=")){
+                fakeBar = scalePage.coin_6;
+            }else if(line2Response.contains(">")){
+                fakeBar=scalePage.coin_5;
+            }else{
+                fakeBar=scalePage.coin_4;
             }
 
-        }
+        } else if(line1Response.contains("<")){
+            wait.until(ExpectedConditions.visibilityOf(scalePage.reset));
+            BrowserUtils.waits(3);
 
-            scalePage.left_0.sendKeys("4");
-            scalePage.left_1.sendKeys("5");
-            scalePage.right_0.sendKeys("6");
-            scalePage.right_1.sendKeys("7");
+            scalePage.reset.click();
+            BrowserUtils.waits(3);
 
-            scalePage.weighBtn.click();
+            scalePage.left0.sendKeys("1");
+            scalePage.right0.sendKeys("2");
+            BrowserUtils.waits(3);
 
-        if (equals) {
-            BrowserUtils.waits(5);
-            scalePage.left_0.clear();
-            scalePage.left_1.clear();
-            scalePage.right_0.clear();
-            scalePage.right_1.clear();
-        }else if (isLess || isGreater) {
-            scalePage.coins4Btn.click();
-            try {
-                wait.until(ExpectedConditions.alertIsPresent());
-                alert = Driver.getDriver().switchTo().alert();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+            scalePage.weigh.click();
+            BrowserUtils.waits(3);
 
-            String alertText = alert.getText();
-            if (alertText.contains("Oops! Try Again!")) {
-                BrowserUtils.waits(5);
-                alert.accept();
-                scalePage.coins5Btn.click();
-                if (alertText.contains("Oops! Try Again!")) {
-                    BrowserUtils.waits(5);
-                    alert.accept();
-                    scalePage.coins6Btn.click();
-                } else if (alertText.contains("Oops! Try Again!")) {
-                    BrowserUtils.waits(5);
-                    alert.accept();
-                    scalePage.coins7Btn.click();
-                }else {
-                    Assert.assertTrue(alert.getText().contains("Yay! You find it!"));
-                    BrowserUtils.waits(5);
-                    alert.accept();
-                }
+            wait.until(ExpectedConditions.visibilityOf(scalePage.responseTableRow2));
+            String line2Response = scalePage.responseTableRow2.getText();
+            if(line2Response.contains("=")){
+                fakeBar = scalePage.coin_3;
+            }else if(line2Response.contains(">")){
+                fakeBar=scalePage.coin_2;
+            }else{
+                fakeBar=scalePage.coin_1;
             }
 
         }
@@ -122,61 +125,28 @@ public class scale_step_definition {
 
     }
 
-
-    @When("user clicks on {string}")
-    public void user_clicks_on(String string) {
-        scalePage.left_0.sendKeys("4");
-        scalePage.left_1.sendKeys("5");
-        scalePage.right_0.sendKeys("6");
-        scalePage.right_1.sendKeys("7");
-        scalePage.weighBtn.click();
-        weightText = scalePage.Weightings.getText();
-        boolean equals = weightText.contains("=");
-        boolean isLess = weightText.contains("<");
-        boolean isGreater = weightText.contains(">");
-
-        scalePage.weighBtn.click();
-
-        if (equals) {
-            BrowserUtils.waits(5);
-            scalePage.left_0.clear();
-            scalePage.left_1.clear();
-            scalePage.right_0.clear();
-            scalePage.right_1.clear();
-        }else if (isLess || isGreater) {
-            scalePage.coins4Btn.click();
-            try {
-                wait.until(ExpectedConditions.alertIsPresent());
-                alert = Driver.getDriver().switchTo().alert();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-
-            String alertText = alert.getText();
-            if (alertText.contains("Oops! Try Again!")) {
-                BrowserUtils.waits(5);
-                alert.accept();
-                scalePage.coins5Btn.click();
-                if (alertText.contains("Oops! Try Again!")) {
-                    BrowserUtils.waits(5);
-                    alert.accept();
-                    scalePage.coins6Btn.click();
-                } else if (alertText.contains("Oops! Try Again!")) {
-                    BrowserUtils.waits(5);
-                    alert.accept();
-                    scalePage.coins7Btn.click();
-                }else {
-                    BrowserUtils.waits(5);
-                    alert.accept();
-                }
-            }
-
-        }
-    }
     @Then("user should be easily identify the fake gold bar")
-    public void user_should_be_easily_identify_the_fake_gold_bar()  {
-        Assert.assertTrue(alert.getText().contains("Yay! You find it!"));
-        Driver.closeDriver();
+    public void user_should_be_easily_identify_the_fake_gold_bar() {
+        wait.until(ExpectedConditions.visibilityOf(scalePage.coin_0));
+        BrowserUtils.waits(2);
+
+        fakeBar.click();
+        BrowserUtils.waits(2);
+        Alert alert = Driver.getDriver().switchTo().alert();
+        BrowserUtils.waits(2);
+
+        String alertMessasge = alert.getText();
+        String expectedAlertMessasge = "Yay! You find it!";
+        BrowserUtils.waits(2);
+
+        Assert.assertTrue("Alert Message FAILED" ,alertMessasge.contains(expectedAlertMessasge));
+        BrowserUtils.waits(2);
+        //System.out.println(alertMessasge);
+
+        alert.accept();
+
+        BrowserUtils.waits(2);
+        Driver.getDriver().close();
 
     }
 }

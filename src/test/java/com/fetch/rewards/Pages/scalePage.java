@@ -12,59 +12,60 @@ public class scalePage {
         PageFactory.initElements(Driver.getDriver(), this);
     }
 
-    @FindBy(id = "left_0")
-    public WebElement left_0;
+    @FindBy(id="left_0")
+    public WebElement left0;
 
-    @FindBy(id = "left_1")
-    public WebElement left_1;
+    @FindBy(id="left_1")
+    public WebElement left1;
 
-    @FindBy(id = "left_2")
-    public WebElement left_2;
+    @FindBy(id="left_2")
+    public WebElement left2;
 
-    @FindBy(id = "right_0")
-    public WebElement right_0;
+    @FindBy(id="right_0")
+    public WebElement right0;
 
-    @FindBy(id = "right_1")
-    public WebElement right_1;
+    @FindBy(id="right_1")
+    public WebElement right1;
 
-    @FindBy(id = "right_2")
-    public WebElement right_2;
+    @FindBy(id="right_2")
+    public WebElement right2;
 
-    @FindBy(id = "reset")
-    public WebElement resetBtn;
 
-    @FindBy(id = "weigh")
-    public WebElement weighBtn;
+    @FindBy(xpath = "//button[@id='reset' and .='Reset']")
+    public WebElement reset;
 
-    @FindBy(xpath = "//li[1]")
-    public WebElement Weightings; // found misspelling Weighings(Weightings)
 
-    @FindBy(id = "coin_0")
-    public WebElement coins0Btn;
+    @FindBy(id="weigh")
+    public WebElement weigh;
+    @FindBy(id="coin_0")
+    public WebElement coin_0;
+    @FindBy(id="coin_1")
+    public WebElement coin_1;
+    @FindBy(id="coin_2")
+    public WebElement coin_2;
+    @FindBy(id="coin_3")
+    public WebElement coin_3;
+    @FindBy(id="coin_4")
+    public WebElement coin_4;
+    @FindBy(id="coin_5")
+    public WebElement coin_5;
+    @FindBy(id="coin_6")
+    public WebElement coin_6;
+    @FindBy(id="coin_7")
+    public WebElement coin_7;
+    @FindBy(id="coin_8")
+    public WebElement coin_8;
+    @FindBy(id="coin_9")
+    public WebElement coin_9;
 
-    @FindBy(id = "coin_1")
-    public WebElement coins1Btn;
 
-    @FindBy(id = "coin_2")
-    public WebElement coins2Btn;
+    @FindBy(xpath = "(//ol/li)[1]")
+    public WebElement responseTableRow1;
 
-    @FindBy(id = "coin_3")
-    public WebElement coins3Btn;
+    @FindBy(xpath = "(//ol/li)[2]")
+    public WebElement responseTableRow2;
 
-    @FindBy(id = "coin_4")
-    public WebElement coins4Btn;
 
-    @FindBy(id = "coin_5")
-    public WebElement coins5Btn;
-
-    @FindBy(id = "coin_6")
-    public WebElement coins6Btn;
-
-    @FindBy(id = "coin_7")
-    public WebElement coins7Btn;
-
-    @FindBy(id = "coin_8")
-    public WebElement coins8Btn;
 
 
 

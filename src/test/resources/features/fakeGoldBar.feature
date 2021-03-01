@@ -7,7 +7,6 @@
     Scenario: locating a fake gold bar
       Given user is on the scale page
       When user scales the gold bar inserting numbers
-      And user clicks on "Weigh"
       Then user should be easily identify the fake gold bar
 
 
